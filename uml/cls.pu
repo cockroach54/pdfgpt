@@ -1,0 +1,80 @@
+@startuml DocGPT
+
+class DocGPT {
+    LM
+    embLM
+    conn
+    register(fpath: str)
+    query(nl_query:str, topn: int)
+}
+
+class DocAssistant {
+    - make_setences_list(fpath: str)
+    segment_topic(fpath: str, method: str)
+    search_news(keywords)
+}
+
+interface LM {
+    model
+    - prompt_template
+    - render_prompt()
+    query(query: str, ctx: dict)
+}
+
+interface EmbLM {
+    model
+    embed_segs(segs: List[dict])
+}
+
+DocGPT --> LM
+DocGPT --> EmbLM
+DocGPT ..> DocAssistant
+
+package local {
+    class LocalLM {
+        model // kogpt
+    }
+
+    class LocalEmbLM {
+        model  // kogpt
+    }
+}
+
+package openai {
+    class OpenAiLM {
+        model // gpt-3.5-turbo
+    }
+
+    class OpenAiEmbLM {
+        model  // text-embedding-ada-002
+    }
+}
+
+LocalLM --|> LM
+LocalEmbLM --|> EmbLM
+OpenAiLM ---|> LM
+OpenAiEmbLM ---|> EmbLM
+
+
+interface VectorDatabase {
+    connect()
+    sementic_search(nl_query, topn, method)
+}
+
+DocGPT -> VectorDatabase
+
+class RediSearch {
+    create_index_if_not_exist()
+    index_documents()
+}
+
+class JsonSearch {
+    redis없이 클라우드애서\n실행 위해 필요!!
+}
+
+RediSearch --|> VectorDatabase
+JsonSearch --|> VectorDatabase
+
+ 
+
+@enduml

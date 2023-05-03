@@ -1,0 +1,42 @@
+/**/.vscode
+.pytest_cache/
+.ipynb_checkpoints/
+/data/*
+/output/*
+!/output/.gitkeep
+/logs/*
+!/logs/.gitkeep
+*.ipynb
+deprecated/
+__pycache__
+/**/tmp
+
+/**/dev
+/server/artifact/db/*
+!/db/.gitkeep
+/out
+/kris/.env
+# wheel build files
+_package/build
+_package/dist
+_package/dist_old
+_package/obzai_causal.egg-info
+
+# tar files
+*.tar
+*.tar.gz
+
+# misc
+# /misc/*
+/dev
+*.svg
+/old
+**/deprecated
+**/backup
+db/**/*.json
+db-ada-002/**/*.json
+db-kogpt/**/*.json
+source/**/*.pdf
+
+# 
+config.toml

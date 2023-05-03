@@ -1,0 +1,10 @@
+langchain
+openai
+google-search-results
+redis
+PyPDF2
+plotly
+scipy
+scikit-learn
+toml
+torch

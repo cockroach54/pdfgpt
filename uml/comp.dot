@@ -1,0 +1,43 @@
+// dot -Tpng comp.dot -o comp.png
+
+digraph g {
+    // graph [pad="0.5", nodesep="0.2", ranksep="0"];
+    // splines = ortho
+    splines = curved
+    node[shape = box]
+    edge[arrowhead = vee]
+
+    user [shape="oval"]
+    paper [label="reference paper\n(pdf, doc, news, html...)"]
+    promot_tmpl [label="prompt\ntemplate"]
+    nl_query [label="natural ranguage\nquery"]
+    sementic_search [label="sementic_search" style=filled fillcolor=lightyellow]
+    user -> paper
+    user -> nl_query
+    nl_query -> sementic_search
+    sementic_search -> kb -> seg_text
+    d3 [shape=point,width=0.01,height=0.01]
+    {promot_tmpl, nl_query, seg_text} -> d3 [dir=none]
+    d3 -> prompt
+
+    kb [label="knowledge base\n(vector db, file)" color=blue shape=cylinder]
+    seg_emb1
+    seg_emb2
+    seg_emb3
+    d2 [shape=point,width=0.01,height=0.01]
+    {seg_emb1, seg_emb2, seg_emb3} -> d2 [dir=none]
+    d2 -> kb
+
+    topic_segmentation [label="topic_segmentation" style=filled fillcolor=lightyellow]
+    emb_model [label="embedding_model\n(ada-002, kogpt)" color=red]
+    qa_model [label="QA model\n(ChatGPT)" color=red]
+
+    paper -> topic_segmentation
+    topic_segmentation -> emb_model 
+    d1 [shape=point,width=0.01,height=0.01]
+    emb_model -> d1 [dir=none]
+    d1 -> {seg_emb1, seg_emb2, seg_emb3};
+    prompt -> qa_model 
+    qa_model -> answer
+
+}
